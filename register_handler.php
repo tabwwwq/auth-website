@@ -61,18 +61,18 @@ if (!empty($errors)) {
 try {
     $pdo = getDBConnection();
     
-    // Проверяем, существует ли пользователь с таким username
-    $stmt = $pdo->prepare("SELECT id FROM users WHERE username = ?");
-    $stmt->execute([$username]);
-    if ($stmt->fetch()) {
-        $errors[] = 'Пользователь с таким именем уже существует';
-    }
+    // Проверяем, существует ли пользователь с таким username или email (один запрос)
+    $stmt = $pdo->prepare("SELECT username, email FROM users WHERE username = ? OR email = ?");
+    $stmt->execute([$username, $email]);
+    $existingUser = $stmt->fetch();
     
-    // Проверяем, существует ли пользователь с таким email
-    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
-    $stmt->execute([$email]);
-    if ($stmt->fetch()) {
-        $errors[] = 'Пользователь с таким email уже существует';
+    if ($existingUser) {
+        if ($existingUser['username'] === $username) {
+            $errors[] = 'Пользователь с таким именем уже существует';
+        }
+        if ($existingUser['email'] === $email) {
+            $errors[] = 'Пользователь с таким email уже существует';
+        }
     }
     
     // Если есть ошибки, возвращаемся на страницу регистрации

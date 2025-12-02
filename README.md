@@ -72,13 +72,24 @@ CREATE TABLE IF NOT EXISTS users (
 
 ### 3. Настройка конфигурации
 
+#### Вариант 1: Через переменные окружения (рекомендуется для production)
+
+```bash
+export DB_HOST=localhost
+export DB_NAME=auth_website
+export DB_USER=your_db_user
+export DB_PASS=your_db_password
+```
+
+#### Вариант 2: Редактирование config.php (для разработки)
+
 Откройте файл `config.php` и измените параметры подключения к базе данных:
 
 ```php
-define('DB_HOST', 'localhost');     // Хост базы данных
-define('DB_NAME', 'auth_website');  // Имя базы данных
-define('DB_USER', 'root');          // Пользователь MySQL
-define('DB_PASS', '');              // Пароль MySQL
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');     // Хост базы данных
+define('DB_NAME', getenv('DB_NAME') ?: 'auth_website');  // Имя базы данных
+define('DB_USER', getenv('DB_USER') ?: 'root');          // Пользователь MySQL
+define('DB_PASS', getenv('DB_PASS') ?: '');              // Пароль MySQL
 ```
 
 ### 4. Запуск проекта

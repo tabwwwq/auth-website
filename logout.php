@@ -9,9 +9,10 @@ require_once 'config.php';
 $_SESSION = [];
 
 // Удаляем cookie сессии
+// Устанавливаем время истечения в прошлое, чтобы браузер удалил cookie
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
-    setcookie(session_name(), '', time() - 42000,
+    setcookie(session_name(), '', 1,
         $params["path"], $params["domain"],
         $params["secure"], $params["httponly"]
     );

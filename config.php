@@ -4,10 +4,12 @@
  */
 
 // Настройки базы данных
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'auth_website');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+// ВАЖНО: В production используйте переменные окружения для безопасности
+// Пример: define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_NAME', getenv('DB_NAME') ?: 'auth_website');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') ?: '');
 define('DB_CHARSET', 'utf8mb4');
 
 // Создание подключения к базе данных с использованием PDO
