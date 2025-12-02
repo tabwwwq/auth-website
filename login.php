@@ -43,7 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error = 'Неверное имя пользователя или пароль';
             }
         } catch (PDOException $e) {
-            $error = 'Ошибка входа: ' . $e->getMessage();
+            // Логируем ошибку для отладки, но не показываем детали пользователю
+            error_log("Login error: " . $e->getMessage());
+            $error = 'Ошибка входа. Пожалуйста, попробуйте позже.';
         }
     }
 }

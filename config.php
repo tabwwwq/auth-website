@@ -13,6 +13,8 @@ try {
     // Устанавливаем режим выборки по умолчанию
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 } catch(PDOException $e) {
-    die("Ошибка подключения к базе данных: " . $e->getMessage());
+    // В продакшене не показываем детали ошибки
+    error_log("Database connection error: " . $e->getMessage());
+    die("Ошибка подключения к базе данных. Пожалуйста, попробуйте позже.");
 }
 ?>

@@ -58,7 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         } catch (PDOException $e) {
-            $error = 'Ошибка регистрации: ' . $e->getMessage();
+            // Логируем ошибку для отладки, но не показываем детали пользователю
+            error_log("Registration error: " . $e->getMessage());
+            $error = 'Ошибка регистрации. Пожалуйста, попробуйте позже.';
         }
     }
 }
